@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <title>التقارير اليومية</title>
+
+  <!-- ---------------- PWA: التثبيت على الشاشة الرئيسية ---------------- -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#D6336C">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="التقارير">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="icon" type="image/png" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+
+  <div class="app">
+
+    <!-- ---------------- الترويسة ---------------- -->
+    <header class="app-header">
+      <h1>نظام التقارير اليومية</h1>
+    </header>
+
+    <!-- ---------------- المحتوى ---------------- -->
+    <main class="app-main">
+
+      <!-- حالة التحميل -->
+      <div id="loading" class="card">
+        <p class="card-text">جارٍ تحميل البيانات...</p>
+      </div>
+
+      <!-- شاشة الاختيار: المندوب / المنطقة / الولايات -->
+      <section id="view-selection" class="view" style="display:none;">
+        <div class="card">
+          <p class="card-title">بيانات اليوم</p>
+
+          <label class="field-label">اسم المندوب</label>
+          <select id="rep-select">
+            <option value="">-- اختر اسمك --</option>
+          </select>
+
+          <label class="field-label">المنطقة</label>
+          <select id="region-select">
+            <option value="">-- اختر المنطقة --</option>
+          </select>
+
+          <div id="states-wrapper" style="display:none;">
+            <label class="field-label">الولايات (يمكن اختيار أكثر من واحدة)</label>
+            <div id="states-list" class="states-list"></div>
+          </div>
+        </div>
+
+        <button id="btn-next" class="btn btn-primary" disabled>التالي</button>
+      </section>
+
+      <!-- شاشة المداخيل -->
+      <section id="view-income" class="view" style="display:none;">
+        <div class="card">
+          <p class="card-title">المداخيل</p>
+
+          <div id="income-rows"></div>
+
+          <button id="btn-add-customer" type="button" class="btn btn-outline">+ إضافة زبون</button>
+
+          <div class="total-row">
+            <span>إجمالي المداخيل</span>
+            <span id="income-total">0</span>
+          </div>
+        </div>
+
+        <button id="btn-income-next" class="btn btn-primary">التالي</button>
+        <button id="btn-income-back" class="btn btn-outline">رجوع</button>
+      </section>
+
+      <!-- شاشة المصاريف -->
+      <section id="view-expenses" class="view" style="display:none;">
+        <div class="card">
+          <p class="card-title">المصاريف</p>
+
+          <label class="field-label">الوقود</label>
+          <input type="number" id="expense-fuel" placeholder="0">
+
+          <label class="field-label">الأكل والشرب</label>
+          <input type="number" id="expense-food" placeholder="0">
+
+          <label class="field-label">الإقامة</label>
+          <input type="number" id="expense-accommodation" placeholder="0">
+
+          <label class="field-label">باركينغ</label>
+          <input type="number" id="expense-parking" placeholder="0">
+
+          <label class="field-label">مصاريف أخرى</label>
+          <input type="number" id="expense-other-amount" placeholder="0">
+
+          <label class="field-label">وصف المصاريف الأخرى</label>
+          <input type="text" id="expense-other-desc" placeholder="مثال: لافاش">
+
+          <div class="total-row">
+            <span>إجمالي المصاريف</span>
+            <span id="expenses-total">0</span>
+          </div>
+        </div>
+
+        <button id="btn-expenses-next" class="btn btn-primary">التالي</button>
+        <button id="btn-expenses-back" class="btn btn-outline">رجوع</button>
+      </section>
+
+      <!-- شاشة المراجعة -->
+      <section id="view-review" class="view" style="display:none;">
+        <div class="card review-card">
+
+          <div class="review-header">
+            <p class="review-rep-name" id="review-rep-name"></p>
+            <p class="review-date" id="review-date"></p>
+          </div>
+
+          <div class="review-line review-line-report-number" id="review-report-number-row" style="display:none;">
+            <span>رقم التقرير</span>
+            <span id="review-report-number"></span>
+          </div>
+
+          <div class="review-section">
+            <p class="review-section-title">المداخيل</p>
+            <div id="review-income-list"></div>
+            <div class="review-line review-line-total">
+              <span>عدد الزبائن</span>
+              <span id="review-income-count"></span>
+            </div>
+            <div class="review-line review-line-total">
+              <span>إجمالي المداخيل</span>
+              <span id="review-income-total"></span>
+            </div>
+          </div>
+
+          <div class="review-section">
+            <p class="review-section-title">المصاريف</p>
+            <div class="review-line"><span>الوقود</span><span id="review-fuel"></span></div>
+            <div class="review-line"><span>الأكل والشرب</span><span id="review-food"></span></div>
+            <div class="review-line"><span>الإقامة</span><span id="review-accommodation"></span></div>
+            <div class="review-line"><span>باركينغ</span><span id="review-parking"></span></div>
+            <div class="review-line"><span>مصاريف أخرى</span><span id="review-other-amount"></span></div>
+            <div class="review-line" id="review-other-desc-row">
+              <span>الوصف</span><span id="review-other-desc"></span>
+            </div>
+            <div class="review-line review-line-total">
+              <span>إجمالي المصاريف</span>
+              <span id="review-expenses-total"></span>
+            </div>
+          </div>
+
+        </div>
+
+        <button id="btn-submit-report" class="btn btn-primary">إرسال ومشاركة التقرير</button>
+        <button id="btn-edit-report" class="btn btn-outline">تعديل التقرير</button>
+      </section>
+
+      <!-- شاشة النجاح -->
+      <section id="view-success" class="view" style="display:none;">
+        <div class="card success-card">
+          <p class="success-icon">✓</p>
+          <p class="success-title">تم إرسال التقرير بنجاح</p>
+          <p class="success-report-number">رقم التقرير: <span id="success-report-number"></span></p>
+        </div>
+
+        <button id="btn-new-report" class="btn btn-primary">تقرير جديد</button>
+      </section>
+
+    </main>
+
+    <!-- ---------------- نافذة البحث عن زبون (لوحة سفلية، تُغلق بالضغط خارجها) ---------------- -->
+    <div id="customer-picker-overlay" class="customer-picker-overlay">
+      <div class="customer-picker-sheet">
+        <div class="customer-picker-header">
+          <input type="text" id="customer-picker-search" class="customer-picker-search"
+                 placeholder="ابحث عن اسم الزبون" lang="fr" dir="ltr"
+                 autocomplete="off" autocorrect="off" spellcheck="false">
+        </div>
+        <div id="customer-picker-list" class="customer-picker-list"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>

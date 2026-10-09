@@ -1,0 +1,517 @@
+/* ---------------- الخط العربي ---------------- */
+  @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
+
+  /* ---------------- متغيرات الألوان ---------------- */
+  :root {
+    --pink-light: #FFE3EC;
+    --pink-deep: #D6336C;
+    --pink-deep-dark: #B02A5A;
+    --yellow-accent: #FFC93C;
+    --white: #FFFFFF;
+    --black: #1A1A1A;
+    --gray-text: #6B6B6B;
+    --gray-border: #EAEAEA;
+    --radius: 16px;
+
+    /* ---- طبقات الزجاج ---- */
+    --glass-white: rgba(255, 255, 255, 0.4);
+    --glass-white-strong: rgba(255, 255, 255, 0.55);
+    --glass-border: rgba(255, 255, 255, 0.55);
+    --glass-pink: rgba(214, 51, 108, 0.55);
+    --glass-pink-strong: rgba(214, 51, 108, 0.75);
+    --glass-shadow: 0 8px 32px rgba(176, 42, 90, 0.18);
+  }
+
+  /* ---------------- إعادة ضبط عامة ---------------- */
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html, body {
+    font-family: 'Cairo', sans-serif;
+    color: var(--black);
+    direction: rtl;
+    -webkit-tap-highlight-color: transparent;
+    min-height: 100vh;
+  }
+
+  /* ---------------- خلفية متدرجة مع فقاعات لون لإبراز تأثير الزجاج ---------------- */
+  body {
+    background:
+      radial-gradient(circle at 15% 15%, rgba(255, 201, 60, 0.55), transparent 45%),
+      radial-gradient(circle at 85% 20%, rgba(214, 51, 108, 0.45), transparent 50%),
+      radial-gradient(circle at 30% 85%, rgba(214, 51, 108, 0.35), transparent 45%),
+      radial-gradient(circle at 90% 90%, rgba(255, 201, 60, 0.4), transparent 45%),
+      var(--pink-light);
+    background-attachment: fixed;
+  }
+
+  /* ---------------- الحاوية العامة ---------------- */
+  .app {
+    max-width: 480px;
+    margin: 0 auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ---------------- الترويسة (زجاجية) ---------------- */
+  .app-header {
+    background: var(--glass-pink);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    color: var(--white);
+    padding: 18px 20px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    border-bottom: 1px solid var(--glass-border);
+    box-shadow: 0 4px 20px rgba(176, 42, 90, 0.15);
+  }
+
+  .app-header h1 {
+    font-size: 19px;
+    font-weight: 700;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  /* ---------------- المحتوى ---------------- */
+  .app-main {
+    flex: 1;
+    padding: 20px;
+  }
+
+  /* ---------------- البطاقات (زجاجية) ---------------- */
+  .card {
+    background: var(--glass-white);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--glass-shadow);
+    margin-bottom: 16px;
+  }
+
+  .card-title {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--pink-deep-dark);
+  }
+
+  .card-text {
+    font-size: 14px;
+    color: var(--gray-text);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  /* ---------------- الأزرار (زجاجية) ---------------- */
+  .btn {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    margin-bottom: 12px;
+    transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .btn:active {
+    transform: scale(0.97);
+  }
+
+  .btn-primary {
+    background: var(--glass-pink-strong);
+    color: var(--white);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    box-shadow: 0 6px 18px rgba(176, 42, 90, 0.35);
+  }
+
+  .btn-secondary {
+    background: rgba(255, 201, 60, 0.75);
+    color: var(--black);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 6px 18px rgba(255, 201, 60, 0.35);
+  }
+
+  .btn-outline {
+    background: var(--glass-white);
+    color: var(--pink-deep);
+    border: 2px solid rgba(214, 51, 108, 0.5);
+  }
+
+  /* ---------------- الحقول (زجاجية) ---------------- */
+  select, input {
+    width: 100%;
+    padding: 14px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 15px;
+    border: 1.5px solid var(--glass-border);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: var(--black);
+    margin-bottom: 14px;
+  }
+
+  select:focus, input:focus {
+    outline: none;
+    border-color: var(--pink-deep);
+    background: rgba(255, 255, 255, 0.7);
+  }
+
+  select:disabled {
+    opacity: 0.5;
+  }
+
+  /* ---------------- تسمية الحقول ---------------- */
+  .field-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--black);
+  }
+
+  /* ---------------- شرائح الاختيار المتعدد (الولايات) ---------------- */
+  .states-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .state-chip {
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1.5px solid var(--glass-border);
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    user-select: none;
+  }
+
+  .state-chip:active {
+    transform: scale(0.96);
+  }
+
+  .state-chip.selected {
+    background: var(--glass-pink-strong);
+    border-color: rgba(255, 255, 255, 0.5);
+    color: var(--white);
+    box-shadow: 0 4px 14px rgba(176, 42, 90, 0.35);
+  }
+
+  /** ---------------- زر "اختر الزبون" (يفتح نافذة البحث) ---------------- */
+  .income-customer-btn {
+    text-align: right;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1.5px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 14px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--black);
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .income-customer-btn-empty {
+    color: var(--gray-text);
+    font-weight: 400;
+  }
+
+  /** ---------------- نافذة البحث عن زبون (لوحة سفلية أصغر، وليست كامل الشاشة) ---------------- */
+  .customer-picker-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(26, 26, 26, 0.45);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    z-index: 1000;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .customer-picker-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .customer-picker-sheet {
+    width: calc(100% - 32px);
+    max-width: 448px;
+    max-height: 85vh;
+    margin-top: 16px;
+    background: var(--pink-light);
+    border-radius: 22px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(176, 42, 90, 0.3);
+    transform: translateY(-24px);
+    transition: transform 0.2s ease;
+  }
+
+  .customer-picker-overlay.open .customer-picker-sheet {
+    transform: translateY(0);
+  }
+
+  .customer-picker-header {
+    padding: 16px 16px 14px;
+    flex-shrink: 0;
+  }
+
+  .customer-picker-search {
+    width: 100%;
+    margin-bottom: 0;
+    background: rgba(255, 255, 255, 0.85);
+    border: 1.5px solid var(--glass-border);
+  }
+
+  .customer-picker-list {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 4px 16px 24px;
+  }
+
+  .customer-picker-item {
+    background: var(--glass-white-strong);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 16px 14px;
+    margin-bottom: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .customer-picker-item:active {
+    background: var(--glass-pink-strong);
+    color: var(--white);
+    transform: scale(0.98);
+  }
+
+  .customer-picker-item-other {
+    color: var(--pink-deep-dark);
+    border: 1.5px dashed var(--pink-deep);
+    margin-top: 14px;
+  }
+
+  .customer-picker-empty {
+    text-align: center;
+    color: var(--gray-text);
+    padding: 30px 0;
+    font-size: 14px;
+  }
+
+  /* ---------------- الزر المعطّل ---------------- */
+  .btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  /* ---------------- كل بطاقة زبون في المداخيل (تجمع الصف الرئيسي + حقل الاسم اليدوي إن وجد) ---------------- */
+  .income-entry {
+    margin-bottom: 10px;
+  }
+
+  /* ---------------- صفوف المداخيل ---------------- */
+  .income-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 0;
+  }
+
+  .income-row .income-name {
+    flex: 4;
+    margin-bottom: 0;
+    order: 2;
+  }
+
+  .income-row .income-amount {
+    flex: 1.3;
+    margin-bottom: 0;
+    order: 1;
+  }
+
+  .income-row .row-delete {
+    order: 3;
+  }
+
+  /* ---------------- حقل اسم الزبون اليدوي (عند اختيار "زبون آخر") ---------------- */
+  .income-other-name {
+    margin-top: 8px;
+    margin-bottom: 0;
+    border-color: var(--pink-deep);
+  }
+
+  .row-delete {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    background: rgba(255, 227, 236, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: var(--pink-deep-dark);
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .row-delete:active {
+    transform: scale(0.94);
+  }
+
+  /* ---------------- شريط الإجمالي ---------------- */
+  .total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 14px;
+    margin-top: 10px;
+    border-top: 1.5px solid var(--glass-border);
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .total-row span:last-child {
+    color: var(--pink-deep-dark);
+    font-size: 19px;
+  }
+
+  /* ---------------- صفحة المراجعة (الفاتورة) ---------------- */
+  .review-card {
+    padding: 24px 20px;
+  }
+
+  .review-header {
+    text-align: center;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+    border-bottom: 2px dashed var(--glass-border);
+  }
+
+  .review-rep-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--pink-deep-dark);
+    margin-bottom: 4px;
+  }
+
+  .review-date {
+    font-size: 13px;
+    color: var(--gray-text);
+  }
+
+  .review-section {
+    margin-bottom: 18px;
+  }
+
+  .review-section-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .review-line {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 14px;
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .review-line span:first-child {
+    color: var(--gray-text);
+  }
+
+  .review-line span:last-child {
+    font-weight: 600;
+  }
+
+  .review-line-total {
+    border-bottom: none;
+    border-top: 1.5px solid var(--glass-border);
+    margin-top: 4px;
+    padding-top: 12px;
+    font-size: 16px;
+  }
+
+  .review-line-total span:last-child {
+    color: var(--pink-deep-dark);
+    font-size: 17px;
+    font-weight: 700;
+  }
+
+  .review-line-report-number {
+    border-bottom: 1.5px dashed var(--glass-border);
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    font-size: 15px;
+  }
+
+  .review-line-report-number span:last-child {
+    color: var(--pink-deep-dark);
+    font-weight: 700;
+  }
+
+  /* ---------------- شاشة النجاح ---------------- */
+  .success-card {
+    text-align: center;
+    padding: 44px 20px;
+  }
+
+  .success-icon {
+    font-size: 46px;
+    color: var(--pink-deep);
+    margin-bottom: 14px;
+    text-shadow: 0 2px 10px rgba(214, 51, 108, 0.3);
+  }
+
+  .success-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .success-report-number {
+    font-size: 15px;
+    color: var(--gray-text);
+  }
+
+  .success-report-number span {
+    font-weight: 700;
+    color: var(--pink-deep-dark);
+  }
